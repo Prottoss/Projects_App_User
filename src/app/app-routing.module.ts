@@ -25,18 +25,6 @@ const routes: Routes = [
     path: '**',
     redirectTo: '',
     pathMatch: 'full'
-  },
-  {
-    path: 'buy',
-    loadChildren: () => import('./buy-ticket/buy-ticket.module').then( m => m.BuyTicketPageModule)
-  },
-  {
-    path: 'view',
-    loadChildren: () => import('./ticket-history/ticket-history.module').then( m => m.TicketHistoryPageModule)
-  },
-  {
-    path: 'add',
-    loadChildren: () => import('./add-vehicle/add-vehicle.module').then( m => m.AddVehiclePageModule)
   }
 ];
 
