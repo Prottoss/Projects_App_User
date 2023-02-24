@@ -8,17 +8,8 @@ import { AuthService } from './auth.service';
 })
 
 export class UserService {
-  userEmail: any;
-  userId: any;
- 
-  constructor(private db: AngularFireDatabase, private auth: Auth, private authService: AuthService ) {
-    this.userId = this.authService.currentUserId();
-    
-    this.getUser().valueChanges().subscribe((res:any) => {
-      this.userEmail = res.email;
-    });
-   
-   }
+
+  constructor(private db: AngularFireDatabase, private auth: Auth ) { }
 
   createUser(uid:any, email:any){
     this.db.object("users/"+uid).set({
@@ -37,8 +28,11 @@ export class UserService {
 
   addVehicleToUser(reg:any){
     const user = this.auth.currentUser;
-    this.db.object("users/"+user?.uid+"/vehicles/").set({
-      reg: reg
-    });
+    this.db.list("users/"+user?.uid+"/vehicles/").push({reg: reg});
+  }
+
+  getVehicles(){
+    const user = this.auth.currentUser;
+    return this.db.list("users/"+user?.uid+"/vehicles");
   }
 }

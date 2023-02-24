@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
       <ion-buttons slot="end">
-        <span>{{userService.userEmail}}
+        <span>{{userEmail}}
         </span>
       </ion-buttons>
     </ion-buttons>
@@ -13,8 +13,8 @@
 </ion-header>
 
 <ion-tabs>
-  <ion-router-outlet></ion-router-outlet>
   <ion-tab-bar slot="bottom">
+    <ion-router-outlet></ion-router-outlet>
     <ion-tab-button tab="add">
       <ion-icon name="add-circle-outline"></ion-icon>
       Add

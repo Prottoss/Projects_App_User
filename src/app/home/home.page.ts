@@ -10,9 +10,13 @@ import { UserService } from '../user.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  
 
+  userEmail:any;
+  
   constructor( public auth: AuthService, private router: Router, public userService: UserService) { 
+    this.userService.getUser().valueChanges().subscribe((res:any)=>{
+      this.userEmail = res.email;
+    });
   }
 
   async logout(){

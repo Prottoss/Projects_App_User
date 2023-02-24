@@ -14,20 +14,25 @@ import { UserService } from '../user.service';
 
 export class AddVehiclePage implements OnInit {
 
-  cars =[];
+  cars = [];
 
-  constructor(private alertCtrl: AlertController, private userService: UserService) { }
+  constructor(private alertCtrl: AlertController, private userService: UserService) {
+    this.userService.getVehicles().valueChanges().subscribe((res:any) => {
+      this.cars = res;
+      console.log("cars",this.cars);
+    });  
+  }
 
   ngOnInit() {
   }
 
   async addVehicle(){
     const alert = await this.alertCtrl.create({
-      header: 'Add ',
+      header: 'Add Vehicle',
       inputs: [
         {
           name: 'reg',
-          placeholder: 'enter car reg',
+          placeholder: 'Reg Number',
           type: 'textarea'
         }
       ],
@@ -45,10 +50,6 @@ export class AddVehiclePage implements OnInit {
     });
     
     await alert.present();
-  }
-
-  openCars(car:any){
-
   }
 
 }

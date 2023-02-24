@@ -1,21 +1,20 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Add Vehicle</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
+
+<ion-content>
   <ion-list>
-    <ion-item *ngFor="let car of cars" (click)="openCars(car)">
-      <ion-label>
-        {{ car }}
-      </ion-label>
+    <ion-item *ngFor="let car of cars">
+      <span>
+        {{ car["reg"] }}
+      </span>
     </ion-item>
   </ion-list>
 
-  <ion-fab vertical="center" horizontal="end" slot="fixed">
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button (click)="addVehicle()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
-  
+  </ion-fab> 
 </ion-content>
