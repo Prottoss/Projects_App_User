@@ -16,8 +16,6 @@ import { UserService } from '../user.service';
 })
 export class LoginPage implements OnInit {
   credentials!: FormGroup;
-  userId: any;
-  userEmail: any;
 
   constructor(
     private fb: FormBuilder,
@@ -51,9 +49,7 @@ export class LoginPage implements OnInit {
     await loading.dismiss();
 
     if(user){
-      this.userId = user.user?.uid;
-      this.userEmail = user.user?.email;
-      this.userService.createUser(this.userId,this.userEmail);
+      this.userService.createUser(user.user?.uid,user.user?.email);
       this.router.navigateByUrl("/home", {replaceUrl: true});
     }else{
       this.showAlert("Registration failed", "Please try again!");
@@ -68,8 +64,6 @@ export class LoginPage implements OnInit {
     await loading.dismiss();
 
     if(user){
-      this.userId = user.user?.uid;
-      this.userEmail = user.user?.email;
       this.router.navigateByUrl("/home", {replaceUrl: true});
     }else{
       this.showAlert("Login failed", "Please try again!");

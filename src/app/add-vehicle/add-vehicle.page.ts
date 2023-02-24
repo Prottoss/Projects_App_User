@@ -12,10 +12,13 @@ import { Component, Injectable, OnInit } from '@angular/core';
 
 export class AddVehiclePage implements OnInit {
 
-  constructor() {
-   }
+  constructor() { }
 
   ngOnInit() {
+  }
+
+  addVehicle(){
+    
   }
 
 }

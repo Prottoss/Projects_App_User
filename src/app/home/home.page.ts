@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-//import { AlertController, LoadingController } from '@ionic/angular';
+import { User } from 'firebase/auth';
 import { AuthService } from '../auth.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +10,10 @@ import { AuthService } from '../auth.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  
 
-  constructor(
-    public auth: AuthService,
-    private router: Router,
-    //private loadingCtrl: LoadingController,
-    //private alertCtrl: AlertController
-  ) { }
+  constructor( public auth: AuthService, private router: Router, public userService: UserService) { 
+  }
 
   async logout(){
     await this.auth.logout();
