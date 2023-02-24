@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+//import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -11,11 +11,11 @@ import { AuthService } from '../auth.service';
 export class HomePage {
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private router: Router,
-    private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
-  ) {}
+    //private loadingCtrl: LoadingController,
+    //private alertCtrl: AlertController
+  ) { }
 
   async logout(){
     await this.auth.logout();

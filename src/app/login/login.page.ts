@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from '../auth.service';
+import { UserService } from '../user.service';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Component({
   selector: 'app-login',
@@ -11,14 +16,17 @@ import { AuthService } from '../auth.service';
 })
 export class LoginPage implements OnInit {
   credentials!: FormGroup;
+  userId: any;
+  userEmail: any;
 
   constructor(
     private fb: FormBuilder,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private authService: AuthService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private userService: UserService 
+  ) {}
 
   get email(){
     return this.credentials.get("email");
@@ -43,6 +51,9 @@ export class LoginPage implements OnInit {
     await loading.dismiss();
 
     if(user){
+      this.userId = user.user?.uid;
+      this.userEmail = user.user?.email;
+      this.userService.createUser(this.userId,this.userEmail);
       this.router.navigateByUrl("/home", {replaceUrl: true});
     }else{
       this.showAlert("Registration failed", "Please try again!");
@@ -57,6 +68,8 @@ export class LoginPage implements OnInit {
     await loading.dismiss();
 
     if(user){
+      this.userId = user.user?.uid;
+      this.userEmail = user.user?.email;
       this.router.navigateByUrl("/home", {replaceUrl: true});
     }else{
       this.showAlert("Login failed", "Please try again!");
@@ -70,7 +83,5 @@ export class LoginPage implements OnInit {
       buttons:["OK"],
     });
     await alert.present();
-  }
-
-  
+  } 
 }
