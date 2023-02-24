@@ -34,4 +34,11 @@ export class UserService {
   getUsers(){
     return this.db.list("users");
   }
+
+  addVehicleToUser(reg:any){
+    const user = this.auth.currentUser;
+    this.db.object("users/"+user?.uid+"/vehicles/").set({
+      reg: reg
+    });
+  }
 }
