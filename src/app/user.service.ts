@@ -13,6 +13,7 @@ export class UserService {
 
   createUser(uid:any, email:any){
     this.db.object("users/"+uid).set({
+      uid: uid,
       email: email
     });
   }
