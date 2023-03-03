@@ -5,5 +5,12 @@
 </ion-header>
 
 <ion-content>
-Buy Ticket page
+    <ion-label>Current Time: {{currentTime | date:"short" }}</ion-label>
+    <br>
+    <label>Parking time:</label>
+    <ion-button (click)="openPicker()">Choose Time</ion-button>
+    <br>
+    <ion-label>Parking Expiry Time: {{expiryTime | date:"short" }}</ion-label>
+    <br>
+    <ion-button (click)="userService.buyTicket()">Purchase</ion-button>
 </ion-content>
