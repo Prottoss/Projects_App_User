@@ -28,7 +28,7 @@ export class UserService {
 
   addVehicleToUser(reg:any){
     const user = this.auth.currentUser;
-    this.db.list("users/"+user?.uid+"/vehicles/").push({reg: reg});
+    this.db.list("users/"+user?.uid+"/vehicles/"+reg).set("reg",reg);
   }
 
   getVehicles(){
