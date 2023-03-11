@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { PickerController } from '@ionic/angular';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-buy-ticket',
@@ -9,12 +10,16 @@ import { PickerController } from '@ionic/angular';
 })
 export class BuyTicketPage implements OnInit {
 
-  currentTime = new Date();
+  currentTime!: Date;
   parkingTime: any;
   expiryTime: any;
+  totalPrice: any;
   constructor(public userService: UserService, private pickerCtrl: PickerController ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    timer(0,1000).subscribe(() =>{
+      this.currentTime = new Date();
+    });
   }
 
   async openPicker() {
@@ -66,7 +71,9 @@ export class BuyTicketPage implements OnInit {
         {
           text: 'Confirm',
           handler: (value) => {
-            this.incrementTime(value.timeSelected.value);
+            this.parkingTime = value.timeSelected.value;
+            this.incrementTime(this.parkingTime);
+            this.calcTotal(this.parkingTime);
           },
         },
       ],
@@ -76,9 +83,30 @@ export class BuyTicketPage implements OnInit {
   }
 
   async incrementTime(time:any) {
-    const incrementMilliseconds = time * 60 * 60 * 1000; // convert hours to milliseconds
-    const newTime = new Date(this.currentTime.getTime() + incrementMilliseconds);
-    this.expiryTime = newTime;
+    const incr = time * 60 * 60 * 1000; // convert hours to milliseconds
+    this.expiryTime = new Date(this.currentTime.getTime() + incr); 
   }
+
+  async calcTotal(time:any)
+  {
+    const temp = time * 0.30;
+    this.totalPrice = (Math.round(temp * 100) / 100).toFixed(2);
+  }
+
+  async createTicket(){
+    const short = require("short-uuid");
+    const uuid = short.generate();
+    
+    const ticket = {
+      id:uuid,
+      start: this.currentTime.toString(),
+      end: this.expiryTime.toString(),
+      duration: this.parkingTime,
+      price: this.totalPrice
+    }
+    this.userService.addTicketToUser(ticket);
+  }
+
+
 
 }

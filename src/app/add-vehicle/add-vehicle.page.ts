@@ -16,14 +16,13 @@ export class AddVehiclePage implements OnInit {
 
   cars = [];
 
-  constructor(private alertCtrl: AlertController, private userService: UserService) {
-    this.userService.getVehicles().valueChanges().subscribe((res:any) => {
+  constructor(private alertCtrl: AlertController, private userService: UserService) {}
+
+  ngOnInit() {
+    this.userService.getVehiclesFromUser().valueChanges().subscribe((res:any) => {
       this.cars = res;
       console.log("cars",this.cars);
     });  
-  }
-
-  ngOnInit() {
   }
 
   async addVehicle(){

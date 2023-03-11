@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-ticket-history',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TicketHistoryPage implements OnInit {
 
-  constructor() { }
+  tickets:any;
+
+  constructor(private userService:UserService) { }
 
   ngOnInit() {
+    this.userService.getTicketsFromUser().valueChanges().subscribe((res:any) => {
+      this.tickets = res;
+      console.log("tickets",this.tickets);
+    });  
   }
 
 }

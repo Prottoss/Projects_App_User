@@ -35,7 +35,7 @@ export class UserService {
     });
   }
 
-  getVehicles(){
+  getVehiclesFromUser(){
     const user = this.auth.currentUser;
     return this.db.list("users/"+user?.uid+"/vehicles");
   }
@@ -47,12 +47,13 @@ export class UserService {
       id: ticket.id,
       ticketStart: ticket.start,
       ticketEnd: ticket.end,
-      ticketDuration: ticket.duration,
+      duration: ticket.duration,
       price: ticket.price
     });
   }
 
-  buyTicket(){
-    
+  getTicketsFromUser(){
+    const user = this.auth.currentUser;
+    return this.db.list("users/"+user?.uid+"/tickets");
   }
 }

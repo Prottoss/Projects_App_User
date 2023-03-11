@@ -5,12 +5,13 @@
 </ion-header>
 
 <ion-content>
-    <ion-label>Current Time: {{currentTime | date:"short" }}</ion-label>
+    <ion-label>Current Time: {{currentTime | date:"dd MMMM yyyy HH:mm" }}</ion-label>
     <br>
-    <label>Parking time:</label>
-    <ion-button (click)="openPicker()">Choose Time</ion-button>
+    <ion-button (click)="openPicker()">Choose parking time</ion-button>
     <br>
-    <ion-label>Parking Expiry Time: {{expiryTime | date:"short" }}</ion-label>
+    <ion-label *ngIf="expiryTime!=null">Parking Expiry Time: <b>{{expiryTime | date:"dd MMMM yyyy HH:mm" }}</b></ion-label>
     <br>
-    <ion-button (click)="userService.buyTicket()">Purchase</ion-button>
+    <ion-label *ngIf="this.totalPrice!=null">Total Price: <b>€{{this.totalPrice}}</b></ion-label>
+    <br>
+    <ion-button (click)="this.createTicket()">Purchase</ion-button>
 </ion-content>
