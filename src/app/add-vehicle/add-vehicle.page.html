@@ -4,15 +4,26 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let car of cars">
-      <span>
-        {{ car["reg"] }}
-      </span>
-    </ion-item>
-  </ion-list>
+  <ion-img src="assets/notfound.png" *ngIf="cars.length == 0"></ion-img>
+    <ion-item *ngIf="cars.length != 0"><h1>Registred vehicles</h1></ion-item>
+  <ion-card *ngFor="let car of cars">
+    <ion-item-sliding >
+      <ion-item lines="none">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="car-outline"></ion-icon> {{ car["reg"] }}
+          </ion-card-title>
+        </ion-card-header>
+      </ion-item>
+      <ion-item-options>
+        <ion-item-option color="danger" (click)="this.deleteVehicle(car['reg'])">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+  </ion-item-sliding>
+</ion-card>
 
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="cars.length < 3">
     <ion-fab-button (click)="addVehicle()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

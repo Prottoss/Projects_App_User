@@ -28,7 +28,8 @@ export class UserService {
   }
 
   //User vehicle functions
-  addVehicleToUser(reg:any){
+  addVehicleToUser(reg:string){
+    reg = reg.toLowerCase();
     const user = this.auth.currentUser;
     this.db.object("users/"+user?.uid+"/vehicles/"+reg).set({
       reg:reg
@@ -38,6 +39,13 @@ export class UserService {
   getVehiclesFromUser(){
     const user = this.auth.currentUser;
     return this.db.list("users/"+user?.uid+"/vehicles");
+  }
+
+  deleteVehicleFromUser(reg:any){
+    console.log("reg2",reg);
+    
+    const user = this.auth.currentUser;
+    this.db.object("users/"+user?.uid+"/vehicles/"+reg).remove();
   }
 
   //User ticket functions

@@ -14,7 +14,7 @@ import { UserService } from '../user.service';
 
 export class AddVehiclePage implements OnInit {
 
-  cars = [];
+  cars:[] = [];
 
   constructor(private alertCtrl: AlertController, private userService: UserService) {}
 
@@ -49,6 +49,11 @@ export class AddVehiclePage implements OnInit {
     });
     
     await alert.present();
+  }
+
+  async deleteVehicle(reg:string){
+    this.userService.deleteVehicleFromUser(reg);
+    console.log(reg);
   }
 
 }
