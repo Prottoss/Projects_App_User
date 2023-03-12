@@ -51,7 +51,7 @@ export class AddVehiclePage implements OnInit {
     await alert.present();
   }
 
-  async deleteVehicle(reg:string){
+  async deleteVehicle(reg:any){
     this.userService.deleteVehicleFromUser(reg);
     console.log(reg);
   }

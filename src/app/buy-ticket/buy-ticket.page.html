@@ -1,17 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>buy-ticket</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-label>Current Time: {{currentTime | date:"dd MMMM yyyy HH:mm" }}</ion-label>
-    <br>
-    <ion-button (click)="openPicker()">Choose parking time</ion-button>
-    <br>
-    <ion-label *ngIf="expiryTime!=null">Parking Expiry Time: <b>{{expiryTime | date:"dd MMMM yyyy HH:mm" }}</b></ion-label>
-    <br>
-    <ion-label *ngIf="this.totalPrice!=null">Total Price: <b>€{{this.totalPrice}}</b></ion-label>
-    <br>
-    <ion-button (click)="this.createTicket()">Purchase</ion-button>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{currentTime | date:"HH:mm" }}</ion-card-title>
+      <ion-card-subtitle>{{currentTime | date:"dd MMMM yyyy" }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-button (click)="openPicker()">
+      <ion-icon name="time-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-card-header>
+      <ion-card-title *ngIf="expiryTime!=null">{{expiryTime | date:"HH:mm" }}</ion-card-title>
+      <ion-card-subtitle *ngIf="expiryTime!=null">{{expiryTime | date:"dd MMMM yyyy" }}</ion-card-subtitle>
+      <ion-card-title *ngIf="this.totalPrice!=null">€{{this.totalPrice}}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  
+    <ion-button (click)="this.createTicket()" *ngIf="this.totalPrice!=null">BUY</ion-button>
 </ion-content>
