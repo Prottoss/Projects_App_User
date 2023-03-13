@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'Projects_App_User',
+  appId: 'com.bigpp.ParkITuser',
+  appName: 'ParkIT User',
   webDir: 'www',
   bundledWebRuntime: false
 };

@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.bigpp.ParkITuser;
 
 import com.getcapacitor.BridgeActivity;
 
