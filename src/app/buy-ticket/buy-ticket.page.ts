@@ -14,12 +14,20 @@ export class BuyTicketPage implements OnInit {
   parkingTime: any;
   expiryTime: any;
   totalPrice: any;
+  validTicket: boolean = false;
   constructor(public userService: UserService, private pickerCtrl: PickerController ) { }
+
+  ionViewDidEnter(): void{
+    this.expiryTime = null;
+    this.totalPrice = null;
+    this.checkValidTicket();
+  }
 
   ngOnInit(): void {
     timer(0,1000).subscribe(() =>{
       this.currentTime = new Date();
     });
+    this.checkValidTicket();
   }
 
   async openPicker() {
@@ -105,6 +113,23 @@ export class BuyTicketPage implements OnInit {
       price: this.totalPrice
     }
     this.userService.addTicketToUser(ticket);
+    this.expiryTime = null;
+    this.totalPrice = null;
+  }
+
+  async checkValidTicket(){
+    this.validTicket = false;
+    const curTime = new Date();
+    this.userService.getTicketsFromUser().valueChanges().subscribe((res:any)=>{
+      for(let ticket of res){
+        const endTime = new Date(ticket.ticketEnd)
+        if(endTime > curTime){
+          this.validTicket = true;
+          break;
+        }
+      }
+      console.log(this.validTicket);
+    });
   }
 
 

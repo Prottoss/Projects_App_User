@@ -4,6 +4,20 @@
 </ion-header>
 
 <ion-content>
+  <ion-card *ngIf="this.activeTicket" color="success">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="ticket-outline"></ion-icon> ParkIT Active Ticket
+      </ion-card-title>
+      <ion-card-title><ion-icon name="calendar-number-outline"></ion-icon> {{ticket.ticketEnd | date:"dd MMMM yyyy HH:mm" }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <b>Price: € {{ticket.price}}</b>
+      <br>
+      ID: {{ticket.id}}
+    </ion-card-content>
+  </ion-card>
+
   <ion-card *ngFor="let ticket of tickets">
     <ion-card-header>
       <ion-card-title>

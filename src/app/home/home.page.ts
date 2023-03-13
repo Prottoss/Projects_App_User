@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'firebase/auth';
 import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
 

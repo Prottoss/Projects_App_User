@@ -7,3 +7,12 @@ ion-button{
     margin-right:40%;
     display: flex;
 }
+
+.checkmark {
+    display: inline-block;
+    transform: rotate(45deg);
+    height: 27px;
+    width: 15px; 
+    border-bottom: 7px solid #78b13f;
+    border-right: 7px solid #78b13f;
+  }
