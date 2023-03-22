@@ -1,13 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-img slot="start" src="assets/p.png"></ion-img>
+    <ion-buttons slot="end">
+      <span>{{userEmail}}</span>
       <ion-button (click)="logout()">
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
-      <ion-buttons slot="end">
-        <span>{{userEmail}}
-        </span>
-      </ion-buttons>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
