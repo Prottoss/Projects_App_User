@@ -14,7 +14,7 @@ export class HomePage {
   
   constructor( public auth: AuthService, private router: Router, public userService: UserService) { 
     this.userService.getUser().valueChanges().subscribe((res:any)=>{
-      this.userEmail = res.email;
+      this.userEmail = res.email.replace("@student.dkit.ie","").toUpperCase();
     });
   }
 
