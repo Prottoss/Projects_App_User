@@ -17,7 +17,7 @@
       <ion-card-subtitle *ngIf="expiryTime!=null">{{expiryTime | date:"dd MMMM yyyy" }}</ion-card-subtitle>
       <ion-card-title *ngIf="this.totalPrice!=null">€{{this.totalPrice}}</ion-card-title>
       <h3 *ngIf="this.validTicket">You already have an active ticket</h3>
-      <div class="checkmark" *ngIf="this.validTicket"></div>
+      <ion-icon class="check" color="success" name="checkmark-outline" *ngIf="this.validTicket"></ion-icon>
     </ion-card-header>
   </ion-card>
   
