@@ -16,7 +16,8 @@
 				Password needs to be at least 6 characters long.
 			</ion-note>
 		</ion-item>
-		<ion-button type="button" expand="block" color="secondary" (click)="register()">Register</ion-button>
+		
 		<ion-button type="submit" expand="block" [disabled]="!credentials.valid">Sign In</ion-button>
+		<ion-button type="button" expand="block" color="secondary" (click)="register()">Register</ion-button>
 	</form>
 </ion-content>

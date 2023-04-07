@@ -5,7 +5,7 @@
 
 <ion-content>
   <ion-img src="assets/ParkitTitle.png" *ngIf="cars.length == 0"></ion-img>
-    <ion-item *ngIf="cars.length != 0"><h1>Registred vehicles</h1></ion-item>
+    <ion-item *ngIf="cars.length != 0" class="ion-padding-horizontal"><h1>Your Vehicles</h1></ion-item>
   <ion-card *ngFor="let car of cars">
     <ion-item-sliding >
       <ion-item lines="none">

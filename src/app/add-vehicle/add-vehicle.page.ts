@@ -32,7 +32,7 @@ export class AddVehiclePage implements OnInit {
         {
           name: 'reg',
           placeholder: 'Reg Number',
-          type: 'textarea'
+          type: 'text'
         }
       ],
       buttons: [

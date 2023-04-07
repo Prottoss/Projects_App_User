@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { PickerController } from '@ionic/angular';
-import { delay, timer } from 'rxjs';
+import { timer } from 'rxjs';
 import { Stripe, PaymentSheetEventsEnum } from '@capacitor-community/stripe';
 import { environment } from 'src/environments/environment';
 
@@ -40,7 +40,7 @@ export class BuyTicketPage implements OnInit {
     this.userService.getUser().valueChanges().subscribe((res:any)=>{
       this.custEmail = res.email;
     });
-    console.log("hehe", this.custEmail);
+
     timer(0,1000).subscribe(() =>{
       this.currentTime = new Date();
     });
