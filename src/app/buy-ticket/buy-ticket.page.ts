@@ -108,10 +108,9 @@ export class BuyTicketPage implements OnInit {
   }
 
   async incrementTime(time:any) {
+    this.expiryTime = null;
     const incr = time * 60 * 60 * 1000; // convert hours to milliseconds
-    timer(0,1000).subscribe(()=>{
-      this.expiryTime = new Date(this.currentTime.getTime() + incr);
-    });
+    this.expiryTime = new Date(this.currentTime.getTime() + incr);
   }
 
   async calcTotal(time:any)
