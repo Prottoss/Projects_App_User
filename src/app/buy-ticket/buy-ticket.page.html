@@ -21,5 +21,6 @@
     </ion-card-header>
   </ion-card>
   
-  <ion-button (click)="this.createTicket()" *ngIf="this.totalPrice!=null && !this.validTicket">BUY</ion-button>
+  <!-- <ion-button (click)="this.createTicket()" *ngIf="this.totalPrice!=null && !this.validTicket">BUY</ion-button> -->
+  <ion-button (click)="this.paymentSheet()" *ngIf="this.totalPrice!=null && !this.validTicket">BUY</ion-button>
 </ion-content>

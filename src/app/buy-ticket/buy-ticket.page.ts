@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { PickerController } from '@ionic/angular';
 import { timer } from 'rxjs';
+import { Stripe, PaymentSheetEventsEnum } from '@capacitor-community/stripe';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-buy-ticket',
@@ -15,15 +18,29 @@ export class BuyTicketPage implements OnInit {
   expiryTime: any;
   totalPrice: any;
   validTicket: boolean = false;
-  constructor(public userService: UserService, private pickerCtrl: PickerController ) { }
+  custEmail: any;
+
+  constructor(public userService: UserService, private pickerCtrl: PickerController) {
+    Stripe.initialize({
+      publishableKey: environment.stripe.publishableKey,
+    });
+  }
 
   ionViewDidEnter(): void{
     this.expiryTime = null;
     this.totalPrice = null;
     this.checkValidTicket();
+    this.userService.getUser().valueChanges().subscribe((res:any)=>{
+      this.custEmail = res.email;
+    });
+    console.log("hehe", this.custEmail);
   }
 
   ngOnInit(): void {
+    this.userService.getUser().valueChanges().subscribe((res:any)=>{
+      this.custEmail = res.email;
+    });
+    console.log("hehe", this.custEmail);
     timer(0,1000).subscribe(() =>{
       this.currentTime = new Date();
     });
@@ -92,12 +109,14 @@ export class BuyTicketPage implements OnInit {
 
   async incrementTime(time:any) {
     const incr = time * 60 * 60 * 1000; // convert hours to milliseconds
-    this.expiryTime = new Date(this.currentTime.getTime() + incr); 
+    timer(0,1000).subscribe(()=>{
+      this.expiryTime = new Date(this.currentTime.getTime() + incr);
+    });
   }
 
   async calcTotal(time:any)
   {
-    const temp = time * 0.30;
+    const temp = time * 0.50;
     this.totalPrice = (Math.round(temp * 100) / 100).toFixed(2);
   }
 
@@ -131,6 +150,49 @@ export class BuyTicketPage implements OnInit {
       console.log(this.validTicket);
     });
   }
+
+  async paymentSheet() {
+    // be able to get event of PaymentSheet
+    Stripe.addListener(PaymentSheetEventsEnum.Completed, () => {
+      console.log('PaymentSheetEventsEnum.Completed');
+    });
+  
+    // prepare PaymentSheet with CreatePaymentSheetOption.
+
+    const stripe = require('stripe')(environment.stripe.secretKey);
+
+    const customer = await stripe.customers.create({
+      email:this.custEmail,
+    });
+
+    const ephemeralKey = await stripe.ephemeralKeys.create(
+      {customer:customer.id},
+      {apiVersion:"2022-11-15"}
+    );
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: this.totalPrice*100,
+      currency: 'eur',
+      customer:customer.id,
+      automatic_payment_methods:{
+        enabled:true
+      }
+    });
+
+    await Stripe.createPaymentSheet({
+      paymentIntentClientSecret: paymentIntent.client_secret,
+      customerId:customer.id,
+      customerEphemeralKeySecret: ephemeralKey,
+      merchantDisplayName: "ParkIT"
+    });
+  
+    //present PaymentSheet and get result.
+    const result = await Stripe.presentPaymentSheet();
+    console.log("result",result);
+    if (result.paymentResult === PaymentSheetEventsEnum.Completed) {
+      this.createTicket();
+    }
+  };
 
 
 
