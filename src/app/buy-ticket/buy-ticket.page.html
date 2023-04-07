@@ -13,8 +13,10 @@
       <ion-icon name="time-outline" slot="icon-only"></ion-icon>
     </ion-button>
     <ion-card-header>
-      <ion-card-title *ngIf="expiryTime!=null">{{expiryTime | date:"HH:mm" }}</ion-card-title>
-      <ion-card-subtitle *ngIf="expiryTime!=null">{{expiryTime | date:"dd MMMM yyyy" }}</ion-card-subtitle>
+      <!-- <ion-card-title *ngIf="expiryTime!=null">{{expiryTime | date:"HH:mm" }}</ion-card-title>
+      <ion-card-subtitle *ngIf="expiryTime!=null">{{expiryTime | date:"dd MMMM yyyy" }}</ion-card-subtitle> -->
+      <ion-card-title *ngIf="!this.validTicket">{{expiryTime | date:"HH:mm" }}</ion-card-title>
+      <ion-card-subtitle *ngIf="!this.validTicket">{{expiryTime | date:"dd MMMM yyyy" }}</ion-card-subtitle>
       <ion-card-title *ngIf="this.totalPrice!=null">€{{this.totalPrice}}</ion-card-title>
       <h3 *ngIf="this.validTicket">You already have an active ticket</h3>
       <ion-icon class="check" color="success" name="checkmark-outline" *ngIf="this.validTicket"></ion-icon>
@@ -22,5 +24,5 @@
   </ion-card>
   
   <!-- <ion-button (click)="this.createTicket()" *ngIf="this.totalPrice!=null && !this.validTicket">BUY</ion-button> -->
-  <ion-button (click)="this.paymentSheet()" *ngIf="this.totalPrice!=null && !this.validTicket">BUY</ion-button>
+  <ion-button (click)="this.paymentSheet()" *ngIf="this.totalPrice!=null && !this.validTicket">Buy</ion-button>
 </ion-content>

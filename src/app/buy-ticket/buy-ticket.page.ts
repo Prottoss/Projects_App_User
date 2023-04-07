@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { PickerController } from '@ionic/angular';
-import { timer } from 'rxjs';
+import { delay, timer } from 'rxjs';
 import { Stripe, PaymentSheetEventsEnum } from '@capacitor-community/stripe';
 import { environment } from 'src/environments/environment';
 
@@ -182,7 +182,7 @@ export class BuyTicketPage implements OnInit {
     await Stripe.createPaymentSheet({
       paymentIntentClientSecret: paymentIntent.client_secret,
       customerId:customer.id,
-      customerEphemeralKeySecret: ephemeralKey,
+      customerEphemeralKeySecret: ephemeralKey.id,
       merchantDisplayName: "ParkIT"
     });
   
