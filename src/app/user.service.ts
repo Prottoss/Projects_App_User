@@ -8,6 +8,8 @@ import { Auth } from '@angular/fire/auth';
 
 export class UserService {
 
+  carFound:any;
+
   constructor(private db: AngularFireDatabase, private auth: Auth ) { }
 
   //User functions

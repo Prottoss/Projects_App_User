@@ -1,6 +1,7 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { UserService } from '../user.service';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -26,12 +27,25 @@ export class AddVehiclePage implements OnInit {
   }
 
   async addVehicle(){
-    const alert = await this.alertCtrl.create({
+
+    const noInputAlert = await this.alertCtrl.create({
+      header: 'Warning!',
+      message: 'No input found!',
+      buttons: ['OK'],
+    });
+
+    const carExistsAlert = await this.alertCtrl.create({
+      header: 'Warning!',
+      message: 'This vehicle is registred with another user.',
+      buttons: ['OK'],
+    });
+
+    const addVehicleAlert = await this.alertCtrl.create({
       header: 'Add Vehicle',
       inputs: [
         {
           name: 'reg',
-          placeholder: 'Reg Number',
+          placeholder: 'Reg: 123g456',
           type: 'text'
         }
       ],
@@ -41,14 +55,19 @@ export class AddVehiclePage implements OnInit {
           role: 'cancel'
         }, {
           text: 'Add',
-          handler: res => {
-            this.userService.addVehicleToUser(res.reg);
+          handler: async res => {
+            if(res.reg == ""){
+              noInputAlert.present();
+            }
+            else{
+              this.userService.addVehicleToUser(res.reg);
+            }
           }
         }
       ]
     });
-    
-    await alert.present();
+
+    await addVehicleAlert.present();
   }
 
   async deleteVehicle(reg:any){
