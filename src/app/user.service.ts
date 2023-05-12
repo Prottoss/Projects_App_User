@@ -44,8 +44,6 @@ export class UserService {
   }
 
   deleteVehicleFromUser(reg:any){
-    console.log("reg2",reg);
-    
     const user = this.auth.currentUser;
     this.db.object("users/"+user?.uid+"/vehicles/"+reg).remove();
   }

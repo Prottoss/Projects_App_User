@@ -1,7 +1,7 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { UserService } from '../user.service';
-import { from } from 'rxjs';
+import { take, timeout } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -16,6 +16,7 @@ import { from } from 'rxjs';
 export class AddVehiclePage implements OnInit {
 
   cars:[] = [];
+  carFound;
 
   constructor(private alertCtrl: AlertController, private userService: UserService) {}
 
@@ -60,7 +61,13 @@ export class AddVehiclePage implements OnInit {
               noInputAlert.present();
             }
             else{
-              this.userService.addVehicleToUser(res.reg);
+              const carExists = await this.findVehicleInDb(res.reg);
+              if (carExists) {
+                carExistsAlert.present();
+              }
+              else{
+                this.userService.addVehicleToUser(res.reg);
+              }
             }
           }
         }
@@ -75,4 +82,23 @@ export class AddVehiclePage implements OnInit {
     console.log(reg);
   }
 
+  findVehicleInDb(reg:any)
+  {
+    return new Promise(resolve => {
+      this.userService.getUsers().valueChanges().pipe(take(1)).subscribe((res: any) => {
+        for(let user of res)
+        {
+          for(let car in user.vehicles)
+          {
+            if(car == reg){
+              resolve(true);  // Resolve promise with 'true' when car is found
+              return;
+            }
+          } 
+        }
+        // No such vehicle in the database!
+        resolve(false);  // Resolve promise with 'false' when no car found
+      });
+    });
+  }
 }
