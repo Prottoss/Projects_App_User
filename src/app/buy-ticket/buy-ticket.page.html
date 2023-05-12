@@ -10,7 +10,7 @@
       <ion-card-subtitle>{{currentTime | date:"dd MMMM yyyy" }}</ion-card-subtitle>
     </ion-card-header>
 
-    <ion-button expand="block" class="ion-margin" (click)="openPicker()" *ngIf="!this.validTicket">
+    <ion-button expand="block" class="ion-margin" (click)="noCarsCheck()" *ngIf="!this.validTicket">
       Select<ion-icon name="time-outline" slot="end"></ion-icon>
     </ion-button>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
-import { PickerController } from '@ionic/angular';
+import { AlertController, PickerController } from '@ionic/angular';
 import { timer } from 'rxjs';
 import { Stripe, PaymentSheetEventsEnum } from '@capacitor-community/stripe';
 import { environment } from 'src/environments/environment';
@@ -19,8 +19,9 @@ export class BuyTicketPage implements OnInit {
   totalPrice: any;
   validTicket: boolean = false;
   custEmail: any;
+  cars: [] = [];
 
-  constructor(public userService: UserService, private pickerCtrl: PickerController) {
+  constructor(public userService: UserService, private pickerCtrl: PickerController, private alertCtrl: AlertController) {
     Stripe.initialize({
       publishableKey: environment.stripe.publishableKey,
     });
@@ -45,6 +46,26 @@ export class BuyTicketPage implements OnInit {
       this.currentTime = new Date();
     });
     this.checkValidTicket();
+
+    this.userService.getVehiclesFromUser().valueChanges().subscribe((res:any) => {
+      this.cars = res;
+      console.log("cars",this.cars);
+    });
+  }
+
+  async noCarsCheck(){
+    const noCarsAlert = await this.alertCtrl.create({
+      header: 'Warning!',
+      message: 'You need to add a vehicle to your account before buying a ticket.',
+      buttons: ['OK'],
+    });
+
+    if(this.cars.length == 0){
+      noCarsAlert.present();
+    }
+    else{
+      await this.openPicker();
+    }
   }
 
   async openPicker() {
